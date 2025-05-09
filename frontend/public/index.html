@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shift Scheduler</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Shift Scheduler</h1>
+
+  <form id="scheduleForm">
+    <label for="totalEmployees">Total Employees:</label>
+    <input type="number" id="totalEmployees" name="totalEmployees" value="10" required />
+
+    <label for="generalEmployees">General Employees:</label>
+    <input type="number" id="generalEmployees" name="generalEmployees" value="4" required />
+
+    <button type="submit">Generate Schedule</button>
+  </form>
+
+  <div id="schedules">
+    <div class="schedule-section">
+      <h2>Normal Schedule</h2>
+      <div class="table-wrapper" id="normalSchedule"></div>
+    </div>
+
+    <div class="schedule-section">
+      <h2>General Schedule</h2>
+      <div class="table-wrapper" id="generalSchedule"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
