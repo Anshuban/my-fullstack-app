@@ -19,7 +19,7 @@ The backend is built using **Spring Boot**. To set up the backend:
 1. Clone the repository:
    ```bash
    git clone <repo-url>
-````
+
 
 2. Navigate to the backend folder:
 
@@ -27,7 +27,7 @@ The backend is built using **Spring Boot**. To set up the backend:
    cd backend
    ```
 
-3. Make sure you have **JDK 11** or higher installed.
+3. Make sure you have JDK 11 or higher installed.
 
 4. Run the Spring Boot application using Maven:
 
@@ -35,13 +35,13 @@ The backend is built using **Spring Boot**. To set up the backend:
    mvn spring-boot:run
    ```
 
-   By default, the backend will be accessible at `http://localhost:8080`.
+   By default, the backend will be accessible at [http://localhost:8080](http://localhost:8080).
 
 5. Ensure that your backend is correctly handling CORS requests (from the frontend running on port 3000).
 
 ### 2. Frontend Setup
 
-The frontend is built using **React**. To set up the frontend:
+The frontend is built using React. To set up the frontend:
 
 1. Navigate to the frontend folder:
 
@@ -61,78 +61,72 @@ The frontend is built using **React**. To set up the frontend:
    npm start
    ```
 
-   The frontend will be accessible at `http://localhost:3000`.
+   The frontend will be accessible at [http://localhost:3000](http://localhost:3000).
 
 ### 3. Accessing the Application
 
-* **Backend (API)**: The backend is accessible at `http://localhost:8080/api/scheduler`.
-* **Frontend (User Interface)**: The frontend is accessible at `http://localhost:3000`.
+* **Backend (API):** The backend is accessible at [http://localhost:8080/api/scheduler](http://localhost:8080/api/scheduler).
+* **Frontend (User Interface):** The frontend is accessible at [http://localhost:3000](http://localhost:3000).
 
 ### 4. Generating the Schedule
 
-* Open the frontend at `http://localhost:3000`.
-* Input the total number of employees and general employees in the form.
-* Click "Generate Schedule" to receive the generated shift schedule.
+1. Open the frontend at [http://localhost:3000](http://localhost:3000).
+2. Input the total number of employees and general employees in the form.
+3. Click "Generate Schedule" to receive the generated shift schedule.
 
 ### 5. Testing the Backend API
 
-You can test the backend API using Postman or `curl`.
+You can test the backend API using Postman or curl.
 
 #### Sample POST Request to Generate Schedule
 
-**URL**: `http://localhost:8080/api/scheduler/generate`
+* **URL:** [http://localhost:8080/api/scheduler/generate](http://localhost:8080/api/scheduler/generate)
+* **Method:** POST
+* **Body (JSON):**
 
-**Method**: `POST`
+  ```json
+  {
+    "totalEmployees": 10,
+    "generalEmployees": 5
+  }
+  ```
+* **Response:**
 
-**Body** (JSON):
-
-```json
-{
-  "totalEmployees": 10,
-  "generalEmployees": 5
-}
-```
-
-**Response**:
-
-```json
-{
-  "normalSchedule": [
-    {
-      "Day": "Monday",
-      "Employee 1": "Shift 1",
-      "Employee 2": "Shift 2"
-    },
-    {
-      "Day": "Tuesday",
-      "Employee 1": "Shift 2",
-      "Employee 2": "Shift 1"
-    }
-  ],
-  "generalSchedule": [
-    {
-      "Day": "Monday",
-      "Employee 3": "Shift 1",
-      "Employee 4": "Shift 2"
-    },
-    {
-      "Day": "Tuesday",
-      "Employee 3": "Shift 2",
-      "Employee 4": "Shift 1"
-    }
-  ]
-}
-```
+  ```json
+  {
+    "normalSchedule": [
+      {
+        "Day": "Monday",
+        "Employee 1": "Shift 1",
+        "Employee 2": "Shift 2"
+      },
+      {
+        "Day": "Tuesday",
+        "Employee 1": "Shift 2",
+        "Employee 2": "Shift 1"
+      }
+    ],
+    "generalSchedule": [
+      {
+        "Day": "Monday",
+        "Employee 3": "Shift 1",
+        "Employee 4": "Shift 2"
+      },
+      {
+        "Day": "Tuesday",
+        "Employee 3": "Shift 2",
+        "Employee 4": "Shift 1"
+      }
+    ]
+  }
+  ```
 
 ### 6. Troubleshooting
 
-* If you encounter CORS errors, ensure that your backend has proper CORS configuration allowing requests from `http://localhost:3000`.
+* If you encounter CORS errors, ensure that your backend has proper CORS configuration allowing requests from [http://localhost:3000](http://localhost:3000).
 * Make sure both the frontend and backend are running on their respective ports (3000 for the frontend and 8080 for the backend).
 
 ### 7. Future Improvements
 
-* **Authentication**: Implement user authentication and authorization for shift management.
-* **Database Integration**: Add a database to store employee schedules persistently.
-* **Advanced Scheduling Algorithms**: Implement more complex scheduling algorithms.
-
-
+* **Authentication:** Implement user authentication and authorization for shift management.
+* **Database Integration:** Add a database to store employee schedules persistently.
