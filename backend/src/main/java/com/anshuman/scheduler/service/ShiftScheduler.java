@@ -43,7 +43,7 @@ public class ShiftScheduler {
         List<String> generalEmployees = new ArrayList<>();
         List<String> normalEmployees = new ArrayList<>();
         for (int i = 1; i <= numGeneral; i++) generalEmployees.add("G" + i);
-        for (int i = 1; i <= numNormal; i++) normalEmployees.add("N" + i);
+        for (int i = 1; i <= numNormal; i++) normalEmployees.add("E" + i);
 
         // Shift pattern
         List<String> shiftPattern = Arrays.asList("B", "B", "A", "A", "C", "C", "Off");
