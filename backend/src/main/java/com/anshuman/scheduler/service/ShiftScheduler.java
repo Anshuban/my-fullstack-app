@@ -1,5 +1,7 @@
 package com.anshuman.scheduler.service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,19 +26,24 @@ public class ShiftScheduler {
         }
     }
 
-    public Map<String, Object> generateSchedule(int totalEmployees, int numGeneral) {
+    public Map<String, Object> generateSchedule(int totalEmployees, int numGeneral, int month, int year) {
         if (numGeneral > totalEmployees) {
             throw new IllegalArgumentException("Number of general employees cannot exceed total employees.");
         }
 
         int numNormal = totalEmployees - numGeneral;
 
-        // Generate the month (30 days)
-        List<Day> month = new ArrayList<>();
-        for (int i = 1; i <= 30; i++) {
-            boolean isSunday = (i % 7 == 0);
-            boolean isGovtHoliday = (i == 15 || i == 26);
-            month.add(new Day("Day " + i, isSunday, isGovtHoliday));
+        // Calculate the number of days in the given month and year
+        LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
+        int daysInMonth = firstDayOfMonth.lengthOfMonth();
+
+        // Generate the calendar for the given month and year
+        List<Day> monthDays = new ArrayList<>();
+        for (int i = 1; i <= daysInMonth; i++) {
+            LocalDate date = LocalDate.of(year, month, i);
+            boolean isSunday = date.getDayOfWeek() == DayOfWeek.SUNDAY;
+            boolean isGovtHoliday = (i == 15 || i == 26);  // Example of government holidays on the 15th and 26th
+            monthDays.add(new Day(date.toString(), isSunday, isGovtHoliday));
         }
 
         // Create employee lists
@@ -57,7 +64,7 @@ public class ShiftScheduler {
 
         // Build general shift schedule
         List<Map<String, String>> generalSchedule = new ArrayList<>();
-        for (Day day : month) {
+        for (Day day : monthDays) {
             Map<String, String> daily = new HashMap<>();
             daily.put("date", day.date);
             for (String emp : generalEmployees) {
@@ -73,7 +80,7 @@ public class ShiftScheduler {
             Map<String, String> empSchedule = new LinkedHashMap<>();
             empSchedule.put("employee", emp);
             int idx = shiftCycleIndex.get(emp);
-            for (Day day : month) {
+            for (Day day : monthDays) {
                 String shift = shiftPattern.get(idx);
                 empSchedule.put(day.date, shift);
                 idx = (idx + 1) % shiftPattern.size();
