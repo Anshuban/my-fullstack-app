@@ -5,13 +5,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;  // For ordered map
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-@Service  // This makes the ShiftScheduler a Spring Bean
+@Service
 public class ShiftScheduler {
 
     static class Day {
@@ -26,7 +26,7 @@ public class ShiftScheduler {
         }
     }
 
-    public Map<String, Object> generateSchedule(int totalEmployees, int numGeneral, int month, int year) {
+    public Map<String, Object> generateSchedule(int totalEmployees, int numGeneral, int month, int year, Map<String, List<List<String>>> leaves) {
         if (numGeneral > totalEmployees) {
             throw new IllegalArgumentException("Number of general employees cannot exceed total employees.");
         }
@@ -42,7 +42,7 @@ public class ShiftScheduler {
         for (int i = 1; i <= daysInMonth; i++) {
             LocalDate date = LocalDate.of(year, month, i);
             boolean isSunday = date.getDayOfWeek() == DayOfWeek.SUNDAY;
-            boolean isGovtHoliday = (i == 15 || i == 26);  // Example of government holidays on the 15th and 26th
+            boolean isGovtHoliday = (i == 15 || i == 26); // Example fixed govt holidays
             monthDays.add(new Day(date.toString(), isSunday, isGovtHoliday));
         }
 
@@ -74,24 +74,47 @@ public class ShiftScheduler {
             generalSchedule.add(daily);
         }
 
-        // Build normal shift schedule in transposed format with ordered days
+        // Build normal shift schedule with leave logic
         List<Map<String, String>> transposedNormalSchedule = new ArrayList<>();
         for (String emp : normalEmployees) {
             Map<String, String> empSchedule = new LinkedHashMap<>();
             empSchedule.put("employee", emp);
             int idx = shiftCycleIndex.get(emp);
+
+            List<List<String>> empLeaveRanges = leaves.getOrDefault(emp, new ArrayList<>());
+
             for (Day day : monthDays) {
-                String shift = shiftPattern.get(idx);
-                empSchedule.put(day.date, shift);
-                idx = (idx + 1) % shiftPattern.size();
+                boolean isOnLeave = false;
+                LocalDate current = LocalDate.parse(day.date);
+                for (List<String> range : empLeaveRanges) {
+                    if (range.size() == 2) {
+                        LocalDate start = LocalDate.parse(range.get(0));
+                        LocalDate end = LocalDate.parse(range.get(1));
+                        if ((current.isEqual(start) || current.isAfter(start)) &&
+                            (current.isEqual(end) || current.isBefore(end))) {
+                            isOnLeave = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (isOnLeave) {
+                    empSchedule.put(day.date, "LEAVE");
+                    idx = (idx + 1) % shiftPattern.size();
+                } else {
+                    String shift = shiftPattern.get(idx);
+                    empSchedule.put(day.date, shift);
+                    idx = (idx + 1) % shiftPattern.size();
+                }
             }
+
             transposedNormalSchedule.add(empSchedule);
         }
 
         // Combine schedules into result
         Map<String, Object> result = new HashMap<>();
         result.put("generalSchedule", generalSchedule);
-        result.put("normalSchedule", transposedNormalSchedule);  // transposed + ordered
+        result.put("normalSchedule", transposedNormalSchedule);
         return result;
     }
 }
