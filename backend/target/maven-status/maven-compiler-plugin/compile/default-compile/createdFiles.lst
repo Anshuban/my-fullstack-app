@@ -1,5 +1,5 @@
-com\anshuman\scheduler\service\ShiftScheduler.class
 com\anshuman\scheduler\controller\ShiftSchedulerController.class
 com\anshuman\scheduler\WebConfig.class
 com\anshuman\scheduler\service\ShiftScheduler$Day.class
+com\anshuman\scheduler\service\ShiftScheduler.class
 com\anshuman\scheduler\SchedulerApplication.class
