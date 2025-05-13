@@ -1,7 +1,7 @@
 
 # Full-Stack Shift Scheduler
 
-A full-stack application to generate shift schedules for employees based on the input data. The backend is built using Spring Boot, and the frontend is built using React. The application communicates between the frontend and backend via HTTP requests to generate and display schedules.
+A full-stack application to generate shift schedules for employees based on the input data. The backend is built using Spring Boot. The application communicates between the frontend and backend via HTTP requests to generate and display schedules.
 
 ## Technologies Used
 
