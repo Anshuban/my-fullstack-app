@@ -16,7 +16,7 @@ document.getElementById("scheduleForm").addEventListener("submit", async functio
   }
 
   try {
-    const response = await fetch("http://localhost:8080/api/scheduler/generate", {
+    const response = await fetch("/api/scheduler/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
