@@ -5,7 +5,7 @@ A full-stack application to generate shift schedules for employees based on the 
 
 ## Technologies Used
 
-- **Frontend:** React (with `create-react-app`), HTML, CSS, JavaScript
+- **Frontend:**  HTML, CSS, JavaScript
 - **Backend:** Spring Boot (Java)
 - **Database (if applicable):** None for this example, but can be added for persistence
 - **Tools:** Postman, npm, Maven
